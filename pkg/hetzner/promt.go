@@ -17,14 +17,13 @@ type Prompt struct {
 func (p *Prompt) Prompt() error {
 	forceSleep := time.Duration(p.Parameters.ForceSleep) * time.Second
 
-	fmt.Printf("Do you really want to nuke the tenant and subscriptions with "+
-		"the ID %s?\n", "asd")
+	fmt.Println("Do you really want to nuke the Hetzner account.")
 	if p.Parameters.Force {
 		fmt.Printf("Waiting %v before continuing.\n", forceSleep)
 		time.Sleep(forceSleep)
 	} else {
-		fmt.Printf("Do you want to continue? Enter tenant ID to continue.\n")
-		if err := utils.Prompt("asd"); err != nil {
+		fmt.Printf("Do you want to continue? Enter %q to continue.\n", "yes")
+		if err := utils.Prompt("yes"); err != nil {
 			return err
 		}
 	}

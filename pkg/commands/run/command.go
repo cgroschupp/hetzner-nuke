@@ -19,6 +19,7 @@ import (
 	"github.com/cgroschupp/hetzner-nuke/pkg/commands/global"
 	"github.com/cgroschupp/hetzner-nuke/pkg/common"
 	"github.com/cgroschupp/hetzner-nuke/pkg/config"
+	"github.com/cgroschupp/hetzner-nuke/pkg/hetzner"
 	"github.com/cgroschupp/hetzner-nuke/pkg/nuke"
 )
 
@@ -72,8 +73,8 @@ func execute(c *cli.Context) error { //nolint:funlen,gocyclo
 
 	n.RegisterVersion(fmt.Sprintf("> %s", common.AppVersion.String()))
 
-	// p := &hetzner.Prompt{Parameters: params}
-	// n.RegisterPrompt(p.Prompt)
+	p := &hetzner.Prompt{Parameters: params}
+	n.RegisterPrompt(p.Prompt)
 
 	tenantResourceTypes := types.ResolveResourceTypes(
 		registry.GetNamesForScope(nuke.Account),

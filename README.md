@@ -11,3 +11,13 @@
 ## Overview
 
 Remove all resources from an Hetzner account.
+
+## Example
+
+```sh
+# Create dummy config
+touch config.yaml
+# Add hcloud token
+export HCLOUD_TOKEN=<your-token>
+podman run -ti -v $(pwd)/config.yaml:/config.yaml -e HCLOUD_TOKEN  ghcr.io/cgroschupp/hetzner-nuke:v0.1.0 run
+```

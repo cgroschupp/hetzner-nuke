@@ -14,10 +14,21 @@ Remove all resources from an Hetzner account.
 
 ## Example
 
+### Build locally
+```sh
+go install .
+# Make sure the go path is inside the PATH
+# export PATH=$(go env GOPATH)/bin:$PATH
+touch config.yaml
+hetzner-nuke run --hcloud-token <your-token>
+```
+
+### Run it with podman or docker
 ```sh
 # Create dummy config
 touch config.yaml
 # Add hcloud token
 export HCLOUD_TOKEN=<your-token>
-podman run -ti -v $(pwd)/config.yaml:/config.yaml -e HCLOUD_TOKEN  ghcr.io/cgroschupp/hetzner-nuke:v0.1.0 run
+# docker run -ti -v $(pwd)/config.yaml:/config.yaml -e HCLOUD_TOKEN ghcr.io/cgroschupp/hetzner-nuke:v0.1.0 run
+podman run -ti -v $(pwd)/config.yaml:/config.yaml -e HCLOUD_TOKEN ghcr.io/cgroschupp/hetzner-nuke:v0.1.0 run
 ```

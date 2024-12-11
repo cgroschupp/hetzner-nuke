@@ -31,7 +31,7 @@ func (l *FloatingIPLister) List(ctx context.Context, o interface{}) ([]resource.
 		return resources, err
 	}
 	for _, floatingIP := range floatingIPS {
-		resources = append(resources, &FloatingIP{obj: floatingIP, Name: &floatingIP.Name, Labels: floatingIP.Labels, ID: &floatingIP.ID})
+		resources = append(resources, &FloatingIP{obj: floatingIP, Name: &floatingIP.Name, Labels: floatingIP.Labels, ID: &floatingIP.ID, client: opts.Client})
 	}
 	return resources, nil
 }

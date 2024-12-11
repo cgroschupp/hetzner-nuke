@@ -31,7 +31,7 @@ func (l *CertificateLister) List(ctx context.Context, o interface{}) ([]resource
 		return resources, err
 	}
 	for _, certificate := range certificates {
-		resources = append(resources, &Certificate{obj: certificate, Name: &certificate.Name, Labels: certificate.Labels, ID: &certificate.ID})
+		resources = append(resources, &Certificate{obj: certificate, Name: &certificate.Name, Labels: certificate.Labels, ID: &certificate.ID, client: opts.Client})
 	}
 	return resources, nil
 }

@@ -31,7 +31,7 @@ func (l *PlacementGroupLister) List(ctx context.Context, o interface{}) ([]resou
 		return resources, err
 	}
 	for _, placementGroup := range placementGroups {
-		resources = append(resources, &PlacementGroup{obj: placementGroup, Name: &placementGroup.Name, Labels: placementGroup.Labels, ID: &placementGroup.ID})
+		resources = append(resources, &PlacementGroup{obj: placementGroup, Name: &placementGroup.Name, Labels: placementGroup.Labels, ID: &placementGroup.ID, client: opts.Client})
 	}
 	return resources, nil
 }

@@ -31,7 +31,7 @@ func (l *FirewallLister) List(ctx context.Context, o interface{}) ([]resource.Re
 		return resources, err
 	}
 	for _, firewall := range firewalls {
-		resources = append(resources, &Firewall{obj: firewall, Name: &firewall.Name, Labels: firewall.Labels, ID: &firewall.ID})
+		resources = append(resources, &Firewall{obj: firewall, Name: &firewall.Name, Labels: firewall.Labels, ID: &firewall.ID, client: opts.Client})
 	}
 	return resources, nil
 }

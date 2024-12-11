@@ -31,7 +31,7 @@ func (l *SnapshotLister) List(ctx context.Context, o interface{}) ([]resource.Re
 		return resources, err
 	}
 	for _, snapshot := range snapshots {
-		resources = append(resources, &Snapshot{obj: snapshot, Name: &snapshot.Name, Labels: snapshot.Labels, ID: &snapshot.ID})
+		resources = append(resources, &Snapshot{obj: snapshot, Name: &snapshot.Name, Labels: snapshot.Labels, ID: &snapshot.ID, client: opts.Client})
 	}
 	return resources, nil
 }

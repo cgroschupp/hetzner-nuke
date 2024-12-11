@@ -31,7 +31,7 @@ func (l *VolumeLister) List(ctx context.Context, o interface{}) ([]resource.Reso
 		return resources, err
 	}
 	for _, volume := range volumes {
-		resources = append(resources, &Volume{obj: volume, Name: &volume.Name, Labels: volume.Labels, ID: &volume.ID})
+		resources = append(resources, &Volume{obj: volume, Name: &volume.Name, Labels: volume.Labels, ID: &volume.ID, client: opts.Client})
 	}
 	return resources, nil
 }

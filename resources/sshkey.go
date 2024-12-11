@@ -31,7 +31,7 @@ func (l *SSHKeyLister) List(ctx context.Context, o interface{}) ([]resource.Reso
 		return resources, err
 	}
 	for _, sshkey := range sshkeys {
-		resources = append(resources, &SSHKey{obj: sshkey, Name: &sshkey.Name, Labels: sshkey.Labels, ID: &sshkey.ID})
+		resources = append(resources, &SSHKey{obj: sshkey, Name: &sshkey.Name, Labels: sshkey.Labels, ID: &sshkey.ID, client: opts.Client})
 	}
 	return resources, nil
 }

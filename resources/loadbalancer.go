@@ -31,7 +31,7 @@ func (l *LoadBalancerLister) List(ctx context.Context, o interface{}) ([]resourc
 		return resources, err
 	}
 	for _, loadBalancer := range loadBalancers {
-		resources = append(resources, &LoadBalancer{obj: loadBalancer, Name: &loadBalancer.Name, Labels: loadBalancer.Labels, ID: &loadBalancer.ID})
+		resources = append(resources, &LoadBalancer{obj: loadBalancer, Name: &loadBalancer.Name, Labels: loadBalancer.Labels, ID: &loadBalancer.ID, client: opts.Client})
 	}
 	return resources, nil
 }

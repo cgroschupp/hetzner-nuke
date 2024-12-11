@@ -31,7 +31,7 @@ func (l *NetworkLister) List(ctx context.Context, o interface{}) ([]resource.Res
 		return resources, err
 	}
 	for _, network := range networks {
-		resources = append(resources, &Network{obj: network, Name: &network.Name, Labels: network.Labels, ID: &network.ID})
+		resources = append(resources, &Network{obj: network, Name: &network.Name, Labels: network.Labels, ID: &network.ID, client: opts.Client})
 	}
 	return resources, nil
 }

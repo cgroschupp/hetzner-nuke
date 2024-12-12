@@ -49,12 +49,13 @@ func execute(c *cli.Context) error { //nolint:funlen,gocyclo
 	logrus.Trace("preparing to run nuke")
 
 	params := &libnuke.Parameters{
-		Force:      c.Bool("force"),
-		ForceSleep: c.Int("force-sleep"),
-		Quiet:      c.Bool("quiet"),
-		NoDryRun:   c.Bool("no-dry-run"),
-		Includes:   c.StringSlice("include"),
-		Excludes:   c.StringSlice("exclude"),
+		Force:              c.Bool("force"),
+		ForceSleep:         c.Int("force-sleep"),
+		Quiet:              c.Bool("quiet"),
+		NoDryRun:           c.Bool("no-dry-run"),
+		Includes:           c.StringSlice("include"),
+		Excludes:           c.StringSlice("exclude"),
+		WaitOnDependencies: !c.Bool("no-wait-on-dependencies"),
 	}
 
 	parsedConfig, err := config.New(libconfig.Options{
@@ -129,6 +130,10 @@ func init() {
 			Name:    "no-prompt",
 			Usage:   "disable prompting for verification to run",
 			Aliases: []string{"force"},
+		},
+		&cli.BoolFlag{
+			Name:  "no-wait-on-dependencies",
+			Usage: "disable waiting for dependencies",
 		},
 		&cli.IntFlag{
 			Name:    "prompt-delay",

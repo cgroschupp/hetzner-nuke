@@ -13,10 +13,11 @@ const FirewallResource = "Firewall"
 
 func init() {
 	registry.Register(&registry.Registration{
-		Name:     FirewallResource,
-		Scope:    nuke.Account,
-		Resource: &Firewall{},
-		Lister:   &FirewallLister{},
+		Name:      FirewallResource,
+		Scope:     nuke.Account,
+		Resource:  &Firewall{},
+		Lister:    &FirewallLister{},
+		DependsOn: []string{ServerResource},
 	})
 }
 

@@ -3,9 +3,9 @@ module github.com/cgroschupp/hetzner-nuke
 go 1.23.4
 
 require (
-	github.com/ekristen/libnuke v0.22.0
+	github.com/ekristen/libnuke v0.24.2
 	github.com/fatih/color v1.18.0
-	github.com/hetznercloud/hcloud-go/v2 v2.17.0
+	github.com/hetznercloud/hcloud-go/v2 v2.19.1
 	github.com/sirupsen/logrus v1.9.3
 	github.com/urfave/cli/v2 v2.27.5
 )
@@ -26,10 +26,10 @@ require (
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/stevenle/topsort v0.2.0 // indirect
 	github.com/xrash/smetrics v0.0.0-20240521201337-686a1a2994c1 // indirect
-	golang.org/x/net v0.30.0 // indirect
-	golang.org/x/sync v0.10.0 // indirect
-	golang.org/x/sys v0.26.0 // indirect
-	golang.org/x/text v0.19.0 // indirect
+	golang.org/x/net v0.34.0 // indirect
+	golang.org/x/sync v0.11.0 // indirect
+	golang.org/x/sys v0.29.0 // indirect
+	golang.org/x/text v0.21.0 // indirect
 	google.golang.org/protobuf v1.34.2 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )

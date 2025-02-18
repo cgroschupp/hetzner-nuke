@@ -17,6 +17,10 @@ func init() {
 		Scope:    nuke.Account,
 		Resource: &LoadBalancer{},
 		Lister:   &LoadBalancerLister{},
+		DependsOn: []string{
+			NetworkResource,
+			CertificateResource,
+		},
 	})
 }
 

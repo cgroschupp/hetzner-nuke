@@ -13,10 +13,11 @@ const PlacementGroupResource = "PlacementGroup"
 
 func init() {
 	registry.Register(&registry.Registration{
-		Name:     PlacementGroupResource,
-		Scope:    nuke.Account,
-		Resource: &PlacementGroup{},
-		Lister:   &PlacementGroupLister{},
+		Name:      PlacementGroupResource,
+		Scope:     nuke.Account,
+		Resource:  &PlacementGroup{},
+		Lister:    &PlacementGroupLister{},
+		DependsOn: []string{ServerResource},
 	})
 }
 

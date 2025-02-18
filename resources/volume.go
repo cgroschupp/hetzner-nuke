@@ -13,10 +13,11 @@ const VolumeResource = "Volume"
 
 func init() {
 	registry.Register(&registry.Registration{
-		Name:     VolumeResource,
-		Scope:    nuke.Account,
-		Resource: &Volume{},
-		Lister:   &VolumeLister{},
+		Name:      VolumeResource,
+		Scope:     nuke.Account,
+		Resource:  &Volume{},
+		Lister:    &VolumeLister{},
+		DependsOn: []string{ServerResource},
 	})
 }
 

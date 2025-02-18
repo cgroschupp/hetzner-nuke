@@ -2,10 +2,13 @@ package resources
 
 import (
 	"context"
+	"time"
 
+	"github.com/cgroschupp/hetzner-nuke/pkg/hetzner"
 	"github.com/cgroschupp/hetzner-nuke/pkg/nuke"
 	"github.com/ekristen/libnuke/pkg/registry"
 	"github.com/ekristen/libnuke/pkg/resource"
+	"github.com/ekristen/libnuke/pkg/types"
 	"github.com/hetznercloud/hcloud-go/v2/hcloud"
 )
 
@@ -31,23 +34,28 @@ func (l *CertificateLister) List(ctx context.Context, o interface{}) ([]resource
 		return resources, err
 	}
 	for _, certificate := range certificates {
-		resources = append(resources, &Certificate{obj: certificate, Name: &certificate.Name, Labels: certificate.Labels, ID: &certificate.ID, client: opts.Client})
+		resources = append(resources, &Certificate{obj: certificate, Name: &certificate.Name, Labels: certificate.Labels, ID: &certificate.ID, client: opts.Client, Created: &certificate.Created})
 	}
 	return resources, nil
 }
 
 type Certificate struct {
-	client *hcloud.Client
-	obj    *hcloud.Certificate
-	Name   *string
-	ID     *int64
-	Labels map[string]string
+	client  *hetzner.Client
+	obj     *hcloud.Certificate
+	Name    *string
+	ID      *int64
+	Labels  map[string]string `description:"The labels associated with the certificate"`
+	Created *time.Time        `description:"The time the certificate was created"`
 }
 
 func (r *Certificate) Remove(ctx context.Context) error {
 	_, err := r.client.Certificate.Delete(ctx, r.obj)
 
 	return err
+}
+
+func (r *Certificate) Properties() types.Properties {
+	return types.NewPropertiesFromStruct(r)
 }
 
 func (r *Certificate) String() string {

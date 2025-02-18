@@ -1,14 +1,14 @@
 package nuke
 
 import (
+	"github.com/cgroschupp/hetzner-nuke/pkg/hetzner"
 	"github.com/ekristen/libnuke/pkg/registry"
-	"github.com/hetznercloud/hcloud-go/v2/hcloud"
 	"github.com/sirupsen/logrus"
 )
 
 const Account registry.Scope = "account"
 
 type ListerOpts struct {
-	Client *hcloud.Client
+	Client *hetzner.Client
 	Logger *logrus.Entry
 }

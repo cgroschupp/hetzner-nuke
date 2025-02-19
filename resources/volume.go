@@ -2,10 +2,13 @@ package resources
 
 import (
 	"context"
+	"time"
 
+	"github.com/cgroschupp/hetzner-nuke/pkg/hetzner"
 	"github.com/cgroschupp/hetzner-nuke/pkg/nuke"
 	"github.com/ekristen/libnuke/pkg/registry"
 	"github.com/ekristen/libnuke/pkg/resource"
+	"github.com/ekristen/libnuke/pkg/types"
 	"github.com/hetznercloud/hcloud-go/v2/hcloud"
 )
 
@@ -32,23 +35,29 @@ func (l *VolumeLister) List(ctx context.Context, o interface{}) ([]resource.Reso
 		return resources, err
 	}
 	for _, volume := range volumes {
-		resources = append(resources, &Volume{obj: volume, Name: &volume.Name, Labels: volume.Labels, ID: &volume.ID, client: opts.Client})
+		resources = append(resources, &Volume{obj: volume, Name: &volume.Name, Labels: volume.Labels, ID: &volume.ID, client: opts.Client, Created: &volume.Created, Location: &volume.Location.Name})
 	}
 	return resources, nil
 }
 
 type Volume struct {
-	client *hcloud.Client
-	obj    *hcloud.Volume
-	Name   *string
-	ID     *int64
-	Labels map[string]string
+	client   *hetzner.Client
+	obj      *hcloud.Volume
+	Name     *string
+	ID       *int64
+	Labels   map[string]string `description:"The labels associated with the volume"`
+	Created  *time.Time        `description:"The time the volume was created"`
+	Location *string           `description:"The location of the volume"`
 }
 
 func (r *Volume) Remove(ctx context.Context) error {
 	_, err := r.client.Volume.Delete(ctx, r.obj)
 
 	return err
+}
+
+func (r *Volume) Properties() types.Properties {
+	return types.NewPropertiesFromStruct(r)
 }
 
 func (r *Volume) String() string {

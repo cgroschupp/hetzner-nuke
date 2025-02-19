@@ -10,6 +10,7 @@ import (
 	"github.com/cgroschupp/hetzner-nuke/pkg/common"
 
 	_ "github.com/cgroschupp/hetzner-nuke/pkg/commands/list"
+	_ "github.com/cgroschupp/hetzner-nuke/pkg/commands/project-info"
 	_ "github.com/cgroschupp/hetzner-nuke/pkg/commands/run"
 
 	_ "github.com/cgroschupp/hetzner-nuke/resources"

@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"strconv"
 	"time"
 
 	"github.com/hetznercloud/hcloud-go/v2/hcloud"
@@ -44,8 +45,6 @@ func execute(c *cli.Context) error { //nolint:funlen,gocyclo
 		entry: logrus.WithField("source", "standard-logger"),
 	})
 
-	logrus.Tracef("tenant id: %s", c.String("tenant-id"))
-
 	logrus.Trace("preparing to run nuke")
 
 	params := &libnuke.Parameters{
@@ -66,15 +65,30 @@ func execute(c *cli.Context) error { //nolint:funlen,gocyclo
 		return err
 	}
 
+	hapi := hetzner.NewClient(hcloud.WithToken(c.String("hcloud-token")))
+	token, _, err := hapi.Token.Current(c.Context)
+	if err != nil {
+		return err
+	}
+	filters, err := parsedConfig.Filters(strconv.Itoa(int(token.Token.Project.ID)))
+	if err != nil {
+		return fmt.Errorf("parse filter: %w", err)
+	}
+
+	logrus.Tracef("project id: %d", token.Token.Project.ID)
+
 	// Initialize the underlying nuke process
-	n := libnuke.New(params, nil, parsedConfig.Settings)
+	n := libnuke.New(params, filters, parsedConfig.Settings)
 
 	n.SetRunSleep(5 * time.Second)
 	n.SetLogger(logrus.WithField("component", "nuke"))
 
 	n.RegisterVersion(fmt.Sprintf("> %s", common.AppVersion.String()))
 
-	p := &hetzner.Prompt{Parameters: params}
+	p := &hetzner.Prompt{
+		Parameters: params,
+		Project:    &token.Token.Project,
+	}
 	n.RegisterPrompt(p.Prompt)
 
 	tenantResourceTypes := types.ResolveResourceTypes(
@@ -93,7 +107,7 @@ func execute(c *cli.Context) error { //nolint:funlen,gocyclo
 
 	logrus.Debug("registering scanner for account")
 	if err := n.RegisterScanner(nuke.Account,
-		libscanner.New("account", tenantResourceTypes, &nuke.ListerOpts{Client: hcloud.NewClient(hcloud.WithToken(c.String("hcloud-token")))})); err != nil {
+		libscanner.New("account", tenantResourceTypes, &nuke.ListerOpts{Client: hapi})); err != nil {
 		return err
 	}
 

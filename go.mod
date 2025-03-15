@@ -3,7 +3,7 @@ module github.com/cgroschupp/hetzner-nuke
 go 1.23.4
 
 require (
-	github.com/ekristen/libnuke v0.24.3
+	github.com/ekristen/libnuke v0.24.4
 	github.com/fatih/color v1.18.0
 	github.com/hetznercloud/hcloud-go/v2 v2.19.1
 	github.com/sirupsen/logrus v1.9.3

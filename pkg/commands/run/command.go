@@ -106,8 +106,15 @@ func execute(c *cli.Context) error { //nolint:funlen,gocyclo
 	)
 
 	logrus.Debug("registering scanner for account")
-	if err := n.RegisterScanner(nuke.Account,
-		libscanner.New("account", tenantResourceTypes, &nuke.ListerOpts{Client: hapi})); err != nil {
+	scanner, err := libscanner.New(&libscanner.Config{
+		ResourceTypes: tenantResourceTypes,
+		Owner:         "account",
+		Opts:          &nuke.ListerOpts{Client: hapi},
+	})
+	if err != nil {
+		return err
+	}
+	if err := n.RegisterScanner(nuke.Account, scanner); err != nil {
 		return err
 	}
 

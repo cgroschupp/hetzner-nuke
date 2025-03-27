@@ -5,7 +5,7 @@ go 1.23.4
 require (
 	github.com/ekristen/libnuke v1.0.0
 	github.com/fatih/color v1.18.0
-	github.com/hetznercloud/hcloud-go/v2 v2.20.1
+	github.com/hetznercloud/hcloud-go/v2 v2.21.0
 	github.com/sirupsen/logrus v1.9.3
 	github.com/urfave/cli/v2 v2.27.6
 )

@@ -1,10 +1,11 @@
 package list
 
 import (
+	"context"
 	"sort"
 
 	"github.com/fatih/color"
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 
 	"github.com/ekristen/libnuke/pkg/registry"
 
@@ -13,7 +14,7 @@ import (
 	_ "github.com/cgroschupp/hetzner-nuke/resources"
 )
 
-func execute(c *cli.Context) error {
+func execute(ctx context.Context, c *cli.Command) error {
 	ls := registry.GetNames()
 
 	sort.Strings(ls)

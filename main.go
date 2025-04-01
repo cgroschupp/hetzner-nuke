@@ -1,11 +1,13 @@
 package main
 
 import (
+	"context"
 	"os"
 	"path"
 
 	"github.com/sirupsen/logrus"
-	"github.com/urfave/cli/v2"
+	cliv2 "github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 
 	"github.com/cgroschupp/hetzner-nuke/pkg/common"
 
@@ -27,23 +29,21 @@ func main() {
 		}
 	}()
 
-	app := cli.NewApp()
+	app := cli.Command{}
+
+	app.Authors = []any{&cliv2.Author{
+		Name:  "Christian Groschupp",
+		Email: "christian@groschupp.org",
+	}}
 	app.Name = path.Base(os.Args[0])
 	app.Usage = "remove everything from an hetzner account"
 	app.Version = common.AppVersion.Summary
-	app.Authors = []*cli.Author{
-		{
-			Name:  "Christian Groschupp",
-			Email: "christian@groschupp.org",
-		},
-	}
 
 	app.Commands = common.GetCommands()
-	app.CommandNotFound = func(context *cli.Context, command string) {
+	app.CommandNotFound = func(ctx context.Context, c *cli.Command, command string) {
 		logrus.Fatalf("Command %s not found.", command)
 	}
-
-	if err := app.Run(os.Args); err != nil {
+	if err := app.Run(context.Background(), os.Args); err != nil {
 		logrus.Fatal(err)
 	}
 }

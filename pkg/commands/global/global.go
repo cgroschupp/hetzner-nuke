@@ -1,12 +1,13 @@
 package global
 
 import (
+	"context"
 	"fmt"
 	"path"
 	"runtime"
 
 	"github.com/sirupsen/logrus"
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 func Flags() []cli.Flag {
@@ -15,7 +16,7 @@ func Flags() []cli.Flag {
 			Name:    "log-level",
 			Usage:   "Log Level",
 			Aliases: []string{"l"},
-			EnvVars: []string{"LOGLEVEL"},
+			Sources: cli.EnvVars("LOGLEVEL"),
 			Value:   "info",
 		},
 		&cli.BoolFlag{
@@ -35,7 +36,7 @@ func Flags() []cli.Flag {
 	return globalFlags
 }
 
-func Before(c *cli.Context) error {
+func Before(ctx context.Context, c *cli.Command) (context.Context, error) {
 	formatter := &logrus.TextFormatter{
 		DisableColors: c.Bool("log-disable-color"),
 		FullTimestamp: c.Bool("log-full-timestamp"),
@@ -63,5 +64,5 @@ func Before(c *cli.Context) error {
 		logrus.SetLevel(logrus.ErrorLevel)
 	}
 
-	return nil
+	return ctx, nil
 }

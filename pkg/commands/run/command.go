@@ -9,7 +9,7 @@ import (
 
 	"github.com/hetznercloud/hcloud-go/v2/hcloud"
 	"github.com/sirupsen/logrus"
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 
 	libconfig "github.com/ekristen/libnuke/pkg/config"
 	libnuke "github.com/ekristen/libnuke/pkg/nuke"
@@ -37,8 +37,8 @@ func (w *log2LogrusWriter) Write(b []byte) (int, error) {
 	return n, nil
 }
 
-func execute(c *cli.Context) error { //nolint:funlen,gocyclo
-	_, cancel := context.WithCancel(c.Context)
+func execute(ctx context.Context, c *cli.Command) error { //nolint:funlen,gocyclo
+	_, cancel := context.WithCancel(ctx)
 	defer cancel()
 
 	log.SetOutput(&log2LogrusWriter{
@@ -49,7 +49,7 @@ func execute(c *cli.Context) error { //nolint:funlen,gocyclo
 
 	params := &libnuke.Parameters{
 		Force:              c.Bool("force"),
-		ForceSleep:         c.Int("force-sleep"),
+		ForceSleep:         int(c.Int("force-sleep")),
 		Quiet:              c.Bool("quiet"),
 		NoDryRun:           c.Bool("no-dry-run"),
 		Includes:           c.StringSlice("include"),
@@ -58,7 +58,7 @@ func execute(c *cli.Context) error { //nolint:funlen,gocyclo
 	}
 
 	parsedConfig, err := config.New(libconfig.Options{
-		Path:         c.Path("config"),
+		Path:         c.String("config"),
 		Deprecations: registry.GetDeprecatedResourceTypeMapping(),
 	})
 	if err != nil {
@@ -66,7 +66,7 @@ func execute(c *cli.Context) error { //nolint:funlen,gocyclo
 	}
 
 	hapi := hetzner.NewClient(hcloud.WithToken(c.String("hcloud-token")))
-	token, _, err := hapi.Token.Current(c.Context)
+	token, _, err := hapi.Token.Current(ctx)
 	if err != nil {
 		return err
 	}
@@ -120,15 +120,15 @@ func execute(c *cli.Context) error { //nolint:funlen,gocyclo
 
 	logrus.Debug("running ...")
 
-	return n.Run(c.Context)
+	return n.Run(ctx)
 }
 
 func init() {
 	flags := []cli.Flag{
-		&cli.PathFlag{
-			Name:  "config",
-			Usage: "path to config file",
-			Value: "config.yaml",
+		&cli.StringFlag{
+			Name:    "config",
+			Usage:   "path to config file",
+			Sources: cli.Files("config.yaml"),
 		},
 		&cli.StringSliceFlag{
 			Name:  "include",
@@ -165,7 +165,7 @@ func init() {
 		&cli.StringFlag{
 			Name:     "hcloud-token",
 			Usage:    "the hcloud token",
-			EnvVars:  []string{"HCLOUD_TOKEN"},
+			Sources:  cli.EnvVars("HCLOUD_TOKEN"),
 			Required: true,
 		},
 	}

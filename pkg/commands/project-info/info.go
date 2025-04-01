@@ -1,10 +1,11 @@
 package list
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/hetznercloud/hcloud-go/v2/hcloud"
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 
 	"github.com/cgroschupp/hetzner-nuke/pkg/commands/global"
 	"github.com/cgroschupp/hetzner-nuke/pkg/common"
@@ -12,9 +13,9 @@ import (
 	_ "github.com/cgroschupp/hetzner-nuke/resources"
 )
 
-func execute(c *cli.Context) error {
+func execute(ctx context.Context, c *cli.Command) error {
 	client := hetzner.NewClient(hcloud.WithToken(c.String("hcloud-token")))
-	token, _, err := client.Token.Current(c.Context)
+	token, _, err := client.Token.Current(ctx)
 	if err != nil {
 		return err
 	}
@@ -27,7 +28,7 @@ func init() {
 		&cli.StringFlag{
 			Name:     "hcloud-token",
 			Usage:    "the hcloud token",
-			EnvVars:  []string{"HCLOUD_TOKEN"},
+			Sources:  cli.EnvVars("HCLOUD_TOKEN"),
 			Required: true,
 		},
 	}

@@ -2,11 +2,11 @@ package main
 
 import (
 	"context"
+	"net/mail"
 	"os"
 	"path"
 
 	"github.com/sirupsen/logrus"
-	cliv2 "github.com/urfave/cli/v2"
 	"github.com/urfave/cli/v3"
 
 	"github.com/cgroschupp/hetzner-nuke/pkg/common"
@@ -31,10 +31,7 @@ func main() {
 
 	app := cli.Command{}
 
-	app.Authors = []any{&cliv2.Author{
-		Name:  "Christian Groschupp",
-		Email: "christian@groschupp.org",
-	}}
+	app.Authors = []any{&mail.Address{Name: "Christian Groschupp", Address: "christian@groschupp.org"}}
 	app.Name = path.Base(os.Args[0])
 	app.Usage = "remove everything from an hetzner account"
 	app.Version = common.AppVersion.Summary

@@ -7,7 +7,7 @@ toolchain go1.25.4
 require (
 	github.com/ekristen/libnuke v1.3.0
 	github.com/fatih/color v1.18.0
-	github.com/hetznercloud/hcloud-go/v2 v2.29.0
+	github.com/hetznercloud/hcloud-go/v2 v2.30.0
 	github.com/sirupsen/logrus v1.9.3
 	github.com/urfave/cli/v3 v3.6.0
 )

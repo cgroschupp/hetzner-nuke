@@ -1,4 +1,4 @@
-FROM alpine:3.22 as base
+FROM alpine:3.23 as base
 RUN apk add --no-cache ca-certificates
 RUN adduser -D hetzner-nuke
 

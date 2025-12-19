@@ -37,7 +37,7 @@ func (l *ServerLister) List(ctx context.Context, o interface{}) ([]resource.Reso
 		return resources, err
 	}
 	for _, server := range servers {
-		resources = append(resources, &Server{obj: server, Name: &server.Name, Labels: server.Labels, ID: &server.ID, client: opts.Client, Created: &server.Created, Location: &server.Datacenter.Location.Name})
+		resources = append(resources, &Server{obj: server, Name: &server.Name, Labels: server.Labels, ID: &server.ID, client: opts.Client, Created: &server.Created, Location: &server.Location.Name})
 	}
 	return resources, nil
 }

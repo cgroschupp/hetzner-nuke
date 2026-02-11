@@ -2,7 +2,7 @@ FROM alpine:3.23 as base
 RUN apk add --no-cache ca-certificates
 RUN adduser -D hetzner-nuke
 
-FROM golang:1.25 AS build
+FROM golang:1.26 AS build
 COPY / /src
 WORKDIR /src
 ENV CGO_ENABLED=0

@@ -2,5 +2,18 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended"
+  ],
+  "customManagers": [
+    {
+      "customType": "jsonata",
+      "fileFormat": "yaml",
+      "managerFilePatterns": ["^\\.github/workflows/ci\\.ya?ml$"],
+      "matchStrings": [
+        "$[0].jobs.*.steps[$contains(uses, 'golangci/golangci-lint-action')].{ \"currentValue\": with.version }"
+      ],
+      "depNameTemplate": "golangci/golangci-lint",
+      "datasourceTemplate": "github-releases",
+      "versioningTemplate": "semver"
+    }
   ]
 }

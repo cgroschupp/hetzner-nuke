@@ -15,11 +15,10 @@ const RRSetResource = "RRSet"
 
 func init() {
 	registry.Register(&registry.Registration{
-		Name:      RRSetResource,
-		Scope:     nuke.Account,
-		Resource:  &RRSet{},
-		Lister:    &RRSetLister{},
-		DependsOn: []string{ZoneResource},
+		Name:     RRSetResource,
+		Scope:    nuke.Account,
+		Resource: &RRSet{},
+		Lister:   &RRSetLister{},
 	})
 }
 

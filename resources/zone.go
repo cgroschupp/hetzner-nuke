@@ -16,10 +16,11 @@ const ZoneResource = "Zone"
 
 func init() {
 	registry.Register(&registry.Registration{
-		Name:     ZoneResource,
-		Scope:    nuke.Account,
-		Resource: &Zone{},
-		Lister:   &ZoneLister{},
+		Name:      ZoneResource,
+		Scope:     nuke.Account,
+		Resource:  &Zone{},
+		Lister:    &ZoneLister{},
+		DependsOn: []string{RRSetResource},
 	})
 }
 

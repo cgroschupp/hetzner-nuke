@@ -39,6 +39,9 @@ func (l *RRSetLister) List(ctx context.Context, o interface{}) ([]resource.Resou
 			return resources, err
 		}
 		for _, rrset := range rrsets {
+			if rrset.Type == hcloud.ZoneRRSetTypeSOA || rrset.Type == hcloud.ZoneRRSetTypeNS {
+				continue
+			}
 			resources = append(resources, &RRSet{obj: rrset, client: opts.Client, ID: &rrset.ID, Name: &rrset.Name, Labels: rrset.Labels, Type: rrset.Type})
 		}
 

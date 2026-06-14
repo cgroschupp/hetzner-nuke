@@ -9,7 +9,7 @@ require (
 	github.com/fatih/color v1.19.0
 	github.com/hetznercloud/hcloud-go/v2 v2.43.0
 	github.com/sirupsen/logrus v1.9.4
-	github.com/urfave/cli/v3 v3.9.1
+	github.com/urfave/cli/v3 v3.10.0
 )
 
 require (

@@ -8,7 +8,7 @@ require (
 	github.com/ekristen/libnuke v1.3.0
 	github.com/fatih/color v1.19.0
 	github.com/hetznercloud/hcloud-go/v2 v2.47.0
-	github.com/sirupsen/logrus v1.10.0
+	github.com/sirupsen/logrus v1.10.1
 	github.com/urfave/cli/v3 v3.11.0
 )
 

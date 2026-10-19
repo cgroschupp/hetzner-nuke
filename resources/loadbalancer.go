@@ -54,7 +54,7 @@ type LoadBalancer struct {
 }
 
 func (r *LoadBalancer) Remove(ctx context.Context) error {
-	_, err := r.client.LoadBalancer.Delete(ctx, r.obj)
+	_, _, err := r.client.LoadBalancer.DeleteWithResult(ctx, r.obj)
 
 	return err
 }

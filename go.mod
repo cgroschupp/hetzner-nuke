@@ -2,7 +2,7 @@ module github.com/cgroschupp/hetzner-nuke
 
 go 1.26.10
 
-toolchain go1.27.3
+toolchain go1.27.4
 
 require (
 	github.com/ekristen/libnuke v1.3.0
